@@ -1,18 +1,17 @@
-import React, { Fragment, Component } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
-export class User extends Component {
-    componentDidMount(){
-        this.props.getUser(this.props.match.params.login)
-    }
+const User= (props)=> {
+    useEffect(()=>{
+        props.getUser(props.match.params.login)
+        // eslint-disable-next-line
+    }, [] );
 
-    static propTypes = {
-        user: PropTypes.object.isRequired,
-        getUser: PropTypes.func.isRequired,
-    }
-
-    render() {
+    // componentDidMount(){
+    //     this.props.getUser(props.match.params.login)
+    // }
+    
         const {
             name,
             avatar_url,
@@ -26,7 +25,7 @@ export class User extends Component {
             following,
             public_repos,
             public_gists
-        } = this.props.user;
+        } = props.user;
 
         return (
             <Fragment>
@@ -74,7 +73,12 @@ export class User extends Component {
                 </div>
             </Fragment>
         )
-    }
+    
+}
+
+User.propTypes = {
+    user: PropTypes.object.isRequired,
+    getUser: PropTypes.func.isRequired,
 }
 
 export default User
