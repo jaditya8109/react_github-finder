@@ -1,10 +1,12 @@
-import React, { Fragment, useEffect } from 'react'
-import PropTypes from 'prop-types';
+import React, { Fragment, useEffect, useContext } from 'react'
 import {Link} from 'react-router-dom';
+import GithubContext from '../context/github/githubContext';
 
 const User= (props)=> {
+    const githubContext = useContext(GithubContext);
+
     useEffect(()=>{
-        props.getUser(props.match.params.login)
+        githubContext.getUser(props.match.params.login)
         // eslint-disable-next-line
     }, [] );
 
@@ -25,7 +27,7 @@ const User= (props)=> {
             following,
             public_repos,
             public_gists
-        } = props.user;
+        } = githubContext.user;
 
         return (
             <Fragment>
@@ -76,9 +78,5 @@ const User= (props)=> {
     
 }
 
-User.propTypes = {
-    user: PropTypes.object.isRequired,
-    getUser: PropTypes.func.isRequired,
-}
 
 export default User
